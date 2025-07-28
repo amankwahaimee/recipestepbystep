@@ -1,0 +1,35 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environment folder
+venv/
+env/
+ENV/
+
+# Django stuff:
+*.sqlite3
+db.sqlite3
+*.log
+*.pot
+*.pyc
+*.mo
+
+# Static and media files
+/staticfiles/
+/media/
+
+# Django migrations
+*/migrations/
+
+# VSCode settings (optional)
+.vscode/
+
+# PyCharm settings (optional)
+.idea/
+
+# MacOS files
+.DS_Store
+
+# Environment variables file (if any)
+.env

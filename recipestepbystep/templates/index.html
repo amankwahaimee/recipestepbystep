@@ -1,0 +1,594 @@
+{% extends 'base.html' %}
+
+{% block selectrecipe %}
+
+<div class="card border mb-5">
+    <div class="card-body">
+        <h6 class="card-title"></h6>
+    </div>
+</div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Recipe
+                </button>
+                <ul class="dropdown-menu">
+                    {% for recipe in recipe %}
+
+                    {% if recipe.colour_code_emissions == 'low' and recipe.colour_code_nutrition == 'low' %}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-success"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'medium' and recipe.colour_code_nutrition == 'medium' %}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'high' and recipe.colour_code_nutrition == 'high' %}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-success"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'low' and recipe.colour_code_nutrition == 'high'%}
+
+                    <li>
+                        <button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-success"> {{ recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-success"> {{ recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+
+                        {% elif recipe.colour_code_emissions == 'high' and recipe.colour_code_nutrition == 'low'%}
+                    <li>
+                        <button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item"> {{
+                            recipe.name }}
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'medium' and recipe.colour_code_nutrition == 'high'%}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-success"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'medium' and recipe.colour_code_nutrition == 'low'%}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'high' and recipe.colour_code_nutrition == 'medium'%}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-danger"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% elif recipe.colour_code_emissions == 'low' and recipe.colour_code_nutrition == 'medium'%}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-success"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-warning"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% else %}
+                    <li><button type="submit" name="selected_recipe" value="{{ recipe.id }}" class="dropdown-item">
+                            {{ recipe.name }}
+                            <span class="badge text-bg-secondary"> {{recipe.colour_code_emissions }} emission</span>
+                            <span class="badge text-bg-secondary"> {{recipe.colour_code_nutrition }} nutrition</span>
+                        </button>
+                    </li>
+
+                    {% endif %}
+
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+
+</form>
+
+<div class="col-sm mb-3">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Location
+        </button>
+        <ul class="dropdown-menu">
+            {% for location in location %}
+            <li>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="selected_location" value="{{ location.id }}" class="dropdown-item">
+                        {{location.location_name }}
+                    </button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<div class="col-sm">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Time Of Day
+        </button>
+        <ul class="dropdown-menu">
+            {% for timeofday in timeofday %}
+            <li>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="selected_timeofday" value="{{ timeofday.id }}" class="dropdown-item">
+                        {{ timeofday.time_of_day }}
+                    </button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+</div>
+
+<div class="card">
+    <div class="card-body text-secondary">
+        <h6 class="card-title">Chosen Recipe: {{ selected_recipe.name }}</h6>
+        <h6 class="card-title">Chosen Location: {{ selected_location.location_name }}</h6>
+        <h6 class="card-title">Chosen Time of day: {{ selected_timeofday.time_of_day }}</h6>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block results %}
+{% if selected_recipe or selected_location or selected_timeofday%}
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Grid Analysis
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div id="chart_container">
+                    <canvas id="my-chart"></canvas>
+                </div>
+                <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js "></script>
+                <script>
+                    const options = {
+                        animation: false,
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'tons',
+                                    font: {
+                                        size: 15,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    const data = {
+                        labels: ['gas cooker', 'electric cooker'],
+                        datasets: [{
+                            data: [230, 2300],
+                            label: 'Cooking Appliances Comparison'
+                        }],
+                        labels: ['vegan', 'vegetarian', 'meditarrian diet', 'european diet', 'US diet'],
+                        datasets: [{
+                            data: [100, 300, 250, 1000, 3000],
+                            label: 'Diet Comparison'
+                        }]
+
+
+
+                    }
+                    const ctx = document.querySelector('#my-chart');
+                    const myChart = new Chart(
+                        ctx,
+                        {
+                            type: 'bar',
+                            data,
+                            options
+                        }
+                    )
+
+
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Recipe Step Analysis
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div id="chart_container">
+                    <canvas id="chart_recipe"></canvas>
+                </div>
+                <script src=" https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js "></script>
+                <script>
+                    const options_recipe = {
+                        animation: false,
+                        scales: {
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'tons',
+                                    font: {
+                                        size: 15,
+                                    }
+                                }
+                            }
+                        },
+                        elements: {
+                            line: {
+                                tension: 0.5
+                            }
+                        }
+                    }
+                    const data_recipe = {
+                        labels: ['step 1', 'step 2', 'step 3', 'step 4', 'step 5'],
+                        datasets: [{
+                            data: [100, 200, 300, 100, 50],
+                            label: 'Recipe Step Analysis CO2'
+                        },
+                        {
+                            data: [5, 2, 1, 1, 0.8],
+                            label: 'Recipe Step Analysis nutrition loss'
+
+                        }]
+                    }
+                    const ctx_recipe = document.querySelector('#chart_recipe');
+                    const myChart_recipe = new Chart(
+                        ctx_recipe,
+                        {
+                            type: 'line',
+                            data: data_recipe,
+                            options: options_recipe
+                        }
+                    )
+
+
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Diet Option Analysis
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                graph comparing emissions of diet options will go here
+            </div>
+        </div>
+    </div>
+
+
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                Cooking Method Analysis
+            </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                graph comparing emissions of cooking methods will go here
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+
+{% endif %}
+{% endblock %}
+
+
+
+{% block ingredients %}
+{% if selected_recipe %}
+
+<div class="row">
+
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                {{ selected_recipe.name }}
+            </div>
+            <img src={{ selected_recipe.image_url }} class="card-img-top" alt="...">
+
+
+
+        </div>
+
+
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"> Cooking Prep: {{ selected_recipe.cooking_prep }} </li>
+                <li class="list-group-item"> Cooking time: {{ selected_recipe.cooking_time }}</li>
+                <li class="list-group-item"> Serving Size: {{ selected_recipe.serving_size }}</li>
+                <li class="list-group-item"> Food Tags: {{ selected_recipe.foodtags }} </li>
+            </ul>
+        </div>
+
+
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                Ingredients
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                <ul>
+                    {% for ingredient in selected_recipe.ingredients.all %}
+                    <li>
+                        <p>{{ ingredient.ingredient }}
+                            <span class="{{ ingredient.emissions_badge_class }}">
+                                {{ ingredient.emissions_key }} emissions
+                            </span>
+                            <span class="{{ ingredient.nutrition_badge_class }}">
+                                {{ ingredient.nutritional_value_key }} nutrition
+                            </span>
+
+                        </p>
+                    </li>
+                    {% empty %}
+                    <li>No ingredients found for this recipe.</li>
+                    {% endfor %}
+                </ul>
+
+
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-5">
+        <div class="alert alert-secondary" role="alert">
+            <h6>Recommendations</h6>
+
+            <ul>
+                {% for ingredient in selected_recipe.ingredients.all %}
+                {% if ingredient.substitutes.all %}
+                <li>
+                    <div class="mt-2 mb-3">
+                        {% for substitute in ingredient.substitutes.all %}
+
+                        <form method="post" class="d-inline">
+                            {% csrf_token %}
+
+                            <button type="submit" name="selected_substitute" value="{{ sub.id }}"
+                                class="btn btn-secondary btn-sm"> change
+                                <br>
+                            </button>
+                        </form>
+
+                        {{ ingredient.ingredient }} to <strong>{{ substitute.ingredient }}</strong>
+                        <span class="{{ substitute.emissions_badge_class }}">
+                            {{ substitute.emissions_key }} emissions
+                        </span>
+                        <span class="{{ substitute.nutrition_badge_class }}">
+                            {{ substitute.nutritional_value_key }} nutrition
+                        </span>
+
+
+                        {% endfor %}
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block steps %}
+{% if selected_recipe %}
+
+
+
+<div class="row">
+
+    <div class="col-2">
+        <div class="card">
+            <h5 class="card-header">Customisation</h5>
+            <div class="card-body">
+                <a href="#" class="btn btn-secondary mb-2 ">Remove step</a>
+                <a href="#" class="btn btn-secondary mb-2 ">Substitute Ingredient</a>
+                <a href="#" class="btn btn-secondary">Substitute Cooking Appliance</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div class="card">
+            <div class="card-header">
+                <h5>{{ selected_recipe.name }} Recipe</h5>
+            </div>
+
+            {% if recipe_steps %}
+
+
+            <ul class="list-group list-group-flush">
+
+                {% if recipe_steps.step_1 %}
+                <li class="list-group-item">
+                    <h6>Step 1</h6>
+                    {{ recipe_steps.step_1 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_2 %}
+                <li class="list-group-item">
+                    <h6>Step 2</h6>
+                    {{ recipe_steps.step_2 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_3 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 3
+                        <button type="button" class="btn btn-success btn-sm" data-bs-toggle="popover"
+                            data-bs-title="Asthma Risk" data-bs-content="...">Ventilation
+                            <span class="badge text-bg-secondary">1</span>
+                        </button>
+                    </h6>
+                    {{ recipe_steps.step_3 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_4 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 4</h6>
+                    {{ recipe_steps.step_4 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_5 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 5</h6>
+                    {{ recipe_steps.step_5 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_6 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 6</h6>
+                    {{ recipe_steps.step_6 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_7 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 7</h6>
+                    {{ recipe_steps.step_7 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_8 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 8</h6>
+                    {{ recipe_steps.step_8 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_9 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 9</h6>
+                    {{ recipe_steps.step_9 }}
+                </li>
+                {% endif %}</li>
+
+                {% if recipe_steps.step_10 != "null" %}
+                <li class="list-group-item">
+                    <h6>Step 10</h6>
+                    {{ recipe_steps.step_10 }}
+                </li>
+                {% endif %}</li>
+
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="col-2">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Emissions Level</h5>
+                <p class="card-text">...</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Nutrition Loss</h5>
+                <p class="card-text">...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endif %}
+{% endblock %}
+
+
+{% block conclusion %}
+{% if selected_recipe %}
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">You Reduced Your Emissions By: 15%!</h4>
+    <p>These are the actions you took to reduce them: </p>
+    <hr>
+    <p class="mb-0">This is how much more emissions you could have reduced: </p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block tidbits %}
+<h5>Insights&Benefits</h5>
+<div class="card text-bg-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Environmental Impact</div>
+    <div class="card-body">
+        <p class="card-text">Electric cooking reduces CO₂ emissions by 77.7% on average compared to gas cooking,
+            with significant variations based on regional energy mix.</p>
+    </div>
+</div>
+
+{% endblock %}
